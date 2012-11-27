@@ -20,7 +20,9 @@ As with other standards tests only inform you what might cause conflicts but do 
 install
 -------
 
-Git clone the repository and composer install the standards.
+Git clone this repository and composer install the standards.
+
+Or _require_ `php-migrations/standards` using composer.
 
 PHP 5.3.2 or newer is required.
 
