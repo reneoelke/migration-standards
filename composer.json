@@ -16,14 +16,14 @@
     ],
     "authors": [
         {
-            "name": "Maik Penz",
+            "name": "Maik Penz"
         },
         {
-            "name": "Marcel Eichner",
+            "name": "Marcel Eichner"
         },
         {
-            "name": "René Oelke",
-        },
+            "name": "René Oelke"
+        }
     ],
     "license": "BSD-2-Clause",
     "require": {
