@@ -1,0 +1,68 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * @todo add file headers
+ */
+
+// get from/ with arguments
+$options = getopt('l::h::', array('from:', 'with:'));
+$availableTargets = array(52, 53, 54, 55);
+
+if (!isset($options['l'])) {
+    if (isset($options['h']) || !isset($options['from']) || !isset($options['with'])) {
+        echo 'USAGE: compat --from=52 --with=53' . PHP_EOL;
+        echo 'AVAILABLE VERSIONS: compat -l' . PHP_EOL; 
+        echo PHP_EOL;
+        exit(1);
+    }
+    $from = (int) $options['from'];
+    $with = (int) $options['with'];
+}
+
+// list available versions if requested or range exceeded
+if (isset($options['l']) || !in_array($from, $availableTargets) || !in_array($with, $availableTargets)) {
+    echo 'Compatibility tests available for' . PHP_EOL;
+    echo '* ' . implode(PHP_EOL . '* ', $availableTargets) . PHP_EOL;
+    echo PHP_EOL;
+    exit(0);
+}
+
+// swap as needed
+if ($with < $from) {
+  $with = $with ^ $from;
+  $from = $with ^ $from;
+  $with = $with ^ $from;
+}
+
+// if diff is more than one minor version create a temporary ruleset and use that
+// TODO handle differing major version (need to know highest minor of lower major)
+if ($with-$from > 1) {
+    // TODO create temporary standard
+} else {
+   // use singular standard
+   $standard = "PHP{$from}to{$with}";
+}
+
+// patch ARGV and ARGC
+unset($_SERVER['argv'][0]);
+foreach ($_SERVER['argv'] as $k => $v) {
+    if ($v == '--from' || $v == '--with') {
+        unset($_SERVER['argv'][$k], $_SERVER['argv'][$k+1]);
+    }
+}
+$_SERVER['argv'] = array_values($_SERVER['argv']);
+$_SERVER['argc'] = count($_SERVER['argv']);
+
+// select phpcs binary
+$phpcs = __DIR__ . '/phpcs';
+if (!file_exists($phpcs)) {
+    $phpcs = __DIR__ . '/../vendor/bin/phpcs';
+    if (!file_exists($phpcs)) {
+        $phpcs = trim(`which phpcs 2>/dev/null`);
+    }
+}
+
+// execute phpcs
+$cmd = escapeshellcmd($phpcs) . ' '  . implode(' ', $_SERVER['argv']);
+passthru($cmd);
