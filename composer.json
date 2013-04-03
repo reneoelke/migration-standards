@@ -1,13 +1,12 @@
 {
     "name": "php-migrations/standards",
     "description": "Compatibility reporting for PHP versions 4.4, 5.0, 5.1, 5.2, 5.3, 5.4 and 5.5.",
-    "type": "metapackage",
     "keywords": [
         "phpcs",
-        "standards",
+        "standard",
         "migration",
         "compatibility",
-        "php4",
+        "php4.4",
         "php5.0",
         "php5.1",
         "php5.2",
@@ -18,15 +17,12 @@
     "authors": [
         {
             "name": "Maik Penz",
-            "role": "Maintainer"
         },
         {
             "name": "Marcel Eichner",
-            "role": "Contributor"
         },
         {
             "name": "René Oelke",
-            "role": "Contributor"
         },
     ],
     "license": "BSD-2-Clause",
@@ -37,5 +33,14 @@
         "php-migrations/php52to53": "*",
         "php-migrations/php53to54": "*",
         "php-migrations/php54to55": "*"
-    }
+    },
+    "suggests": {
+        "fabpot/php-cs-fixer": "dev-master"
+    },
+    "require": {
+        "php": ">=5.3.6"
+    },
+    "bin": [
+        "scripts/compat"
+    ]
 }
