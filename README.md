@@ -1,9 +1,7 @@
 php-migration-standards
 =======================
 
-Migration tests using PHP_CodeSniffer standards.
-
-This composer _metapackage_ provides tests between any two of these PHP versions:
+This composer _metapackage_ provides compatibility tests between any two of these PHP versions:
 * PHP 4.4
 * PHP 5.0
 * PHP 5.1
@@ -12,35 +10,41 @@ This composer _metapackage_ provides tests between any two of these PHP versions
 * PHP 5.4
 * PHP 5.5
 
-Please note that the tests are under development and will not yet cover much of the changelog.
-Status changes will be reflected in later revisions of this README.
+Please refer to the single standard for detail.
 
-As with other standards tests only inform you what might cause conflicts but do not try to fix them for you.
+!!! TODO link standards !!!
+
+!!! TODO describe strategie for compatibility tests across multiple versions !!!
+
+As with most phpcs standards a detailed report is generated.
+Your code will not be modified.
 
 install
 -------
 
-Git clone this repository and composer install the standards.
+Git clone this repository and  the standards.
 
-Or _require_ `php-migrations/standards` using composer.
+Either
 
-PHP 5.3.2 or newer is required.
+```/bin/bash
+git clone git@github.com:php-migrations/migration-standards.git
+cd migrations-standards
+composer install
+```
+
+Or add `php-migrations/standards` to the _require_/ _require-dev_ section of your `composer.json`.
 
 usage
 -----
 
-From with the `php-migration-standards` directory run
+Test compatibility between two versions like
 ```
-./vendor/bin/phpcs --standard=PHP52to54 /path/to/your/code
+./vendor/bin/phpcs --standard=PHP53to54 /path/to/your/code
 ```
-And replace `PHP52to54` with whatever migration you require.
+And replace `PHP53to54` with whatever migration you require.
 
-Please note that smaller steps are recommended.
-They reduce the number of reported standards violations and are faster to run and fix especially for larger/ older projects.
-
-As with other standards it might happen that you fix an error and a new one occurs for that file. Sometimes a single error may mask several other issues. 
+Sometimes a single error may mask several other issues.
 
 !! TODO add references to migration projects like the phpcs fixer !!
 !! TODO add vagrant setup !!
-!! TODO add detailed status information (links) !!
-!! TODO add detailed install and usage information !!
+!! TODO extend usage section !!
