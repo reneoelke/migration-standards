@@ -31,7 +31,7 @@
     ],
     "license": "BSD-2-Clause",
     "require": {
-        "php-migrations/php4to50": "*",
+        "php-migrations/php44to50": "*",
         "php-migrations/php50to51": "*",
         "php-migrations/php51to52": "*",
         "php-migrations/php52to53": "*",
