@@ -51,6 +51,7 @@ foreach ($_SERVER['argv'] as $k => $v) {
         unset($_SERVER['argv'][$k], $_SERVER['argv'][$k+1]);
     }
 }
+$_SERVER['argv'][] = '--standard=' . $standard;
 $_SERVER['argv'] = array_values($_SERVER['argv']);
 $_SERVER['argc'] = count($_SERVER['argv']);
 
