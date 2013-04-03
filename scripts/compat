@@ -3,11 +3,13 @@
 
 /**
  * @todo add file headers
+ * @todo clean up
  */
 
 // get from/ with arguments
 $options = getopt('l::h::', array('from:', 'with:'));
 $availableTargets = array(52, 53, 54, 55);
+$available = array_flip($availableTargets);
 
 if (!isset($options['l'])) {
     if (isset($options['h']) || !isset($options['from']) || !isset($options['with'])) {
@@ -21,7 +23,7 @@ if (!isset($options['l'])) {
 }
 
 // list available versions if requested or range exceeded
-if (isset($options['l']) || !in_array($from, $availableTargets) || !in_array($with, $availableTargets)) {
+if (isset($options['l']) || !isset($available[$from]) || !isset($available[$with])) {
     echo 'Compatibility tests available for' . PHP_EOL;
     echo '* ' . implode(PHP_EOL . '* ', $availableTargets) . PHP_EOL;
     echo PHP_EOL;
@@ -30,18 +32,27 @@ if (isset($options['l']) || !in_array($from, $availableTargets) || !in_array($wi
 
 // swap as needed
 if ($with < $from) {
-  $with = $with ^ $from;
-  $from = $with ^ $from;
-  $with = $with ^ $from;
+    $with = $with ^ $from;
+    $from = $with ^ $from;
+    $with = $with ^ $from;
 }
 
+$standard = "PHP{$from}to{$with}";
 // if diff is more than one minor version create a temporary ruleset and use that
-// TODO handle differing major version (need to know highest minor of lower major)
-if ($with-$from > 1) {
-    // TODO create temporary standard
-} else {
-   // use singular standard
-   $standard = "PHP{$from}to{$with}";
+if ($available[$with]-$available[$from] > 1) {
+    // create temporary standard
+    $standard = sys_get_temp_dir() . '/' . $standard . uniqid() . '.xml';
+    $ruleset = '<?xml version="1.0"?>' . PHP_EOL;
+    $ruleset .= sprintf('<ruleset name="Compat standard %d-%d">' . PHP_EOL, $from, $with);
+    // add refs
+    foreach ($availableTargets as $k => $v) {
+        if ($v==$from && $v<$with) {
+            $from = $availableTargets[$k+1];
+            $ruleset .= sprintf('<rule ref="php%dto%d"/>' . PHP_EOL, $v, $from);
+        }
+    }
+    $ruleset .= '</ruleset>';
+    file_put_contents($standard, $ruleset);
 }
 
 // patch ARGV and ARGC
