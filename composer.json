@@ -1,11 +1,12 @@
 {
     "name": "php-migrations/standards",
-    "description": "Sniffs testings migration between PHP versions 4.4, 5.0, 5.1, 5.2, 5.3, 5.4 and 5.5.",
+    "description": "Compatibility reporting for PHP versions 4.4, 5.0, 5.1, 5.2, 5.3, 5.4 and 5.5.",
     "type": "metapackage",
     "keywords": [
         "phpcs",
         "standards",
         "migration",
+        "compatibility",
         "php4",
         "php5.0",
         "php5.1",
@@ -18,30 +19,23 @@
         {
             "name": "Maik Penz",
             "role": "Maintainer"
-        }
+        },
+        {
+            "name": "Marcel Eichner",
+            "role": "Contributor"
+        },
+        {
+            "name": "René Oelke",
+            "role": "Contributor"
+        },
     ],
     "license": "BSD-2-Clause",
     "require": {
         "php-migrations/php4to50": "*",
-        "php-migrations/php4to51": "*",
-        "php-migrations/php4to52": "*",
-        "php-migrations/php4to53": "*",
-        "php-migrations/php4to54": "*",
-        "php-migrations/php4to55": "*",
         "php-migrations/php50to51": "*",
-        "php-migrations/php50to52": "*",
-        "php-migrations/php50to53": "*",
-        "php-migrations/php50to54": "*",
-        "php-migrations/php50to55": "*",
         "php-migrations/php51to52": "*",
-        "php-migrations/php51to53": "*",
-        "php-migrations/php51to54": "*",
-        "php-migrations/php51to55": "*",
         "php-migrations/php52to53": "*",
-        "php-migrations/php52to54": "*",
-        "php-migrations/php52to55": "*",
         "php-migrations/php53to54": "*",
-        "php-migrations/php53to55": "*",
         "php-migrations/php54to55": "*"
     }
 }
