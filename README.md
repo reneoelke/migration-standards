@@ -1,32 +1,22 @@
 php-migration-standards
 =======================
 
-This composer _metapackage_ provides compatibility tests between any two of these PHP versions:
-* PHP 4.4
-* PHP 5.0
-* PHP 5.1
+This composer package provides compatibility tests between any two of these PHP versions:
 * PHP 5.2
-* PHP 5.3
-* PHP 5.4
-* PHP 5.5
+* [https://github.com/php-migrations/PHP52to53](PHP 5.3)
+* [https://github.com/php-migrations/PHP53to54](PHP 5.4)
+* [https://github.com/php-migrations/PHP54to55](PHP 5.5)
 
-Please refer to the single standard for detail.
+Please refer to each standard for further detail.
 
-!!! TODO link standards !!!
-
-!!! TODO describe strategie for compatibility tests across multiple versions !!!
-
-As with most phpcs standards a detailed report is generated.
-Your code will not be modified.
+As with most phpcs standards code will not be modified directly and any error may mask further issues.
 
 install
 -------
 
-Git clone this repository and  the standards.
-
 Either
 
-```/bin/bash
+```
 git clone git@github.com:php-migrations/migration-standards.git
 cd migrations-standards
 composer install
@@ -38,13 +28,17 @@ usage
 -----
 
 Test compatibility between two versions like
-```
-./vendor/bin/phpcs --standard=PHP53to54 /path/to/your/code
-```
-And replace `PHP53to54` with whatever migration you require.
 
-Sometimes a single error may mask several other issues.
+```
+./vendor/bin/compat --from=52 --with=54 /path/to/your/code
+```
+
+Additionally any [phpcs](http://pear.php.net/manual/en/package.php.php-codesniffer.usage.php) argument can be used - but `--standard`.
+
+!! TODO add vagrant setup !!
+
+!! TODO extend usage section !!
 
 !! TODO add references to migration projects like the phpcs fixer !!
-!! TODO add vagrant setup !!
-!! TODO extend usage section !!
+
+!! TODO add travis integration notice !!
