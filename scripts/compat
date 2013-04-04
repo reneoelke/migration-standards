@@ -5,6 +5,12 @@
  * @todo add file headers
  * @todo clean up
  */
+ 
+// test OS requirement
+if (stripos(php_uname('s'), 'windows') !== false) {
+    echo 'Can not run on windows OS' . PHP_EOL . PHP_EOL;
+    exit(1);
+}
 
 // get from/ with arguments
 $options = getopt('l::h::', array('from:', 'with:'));
