@@ -3,9 +3,9 @@ php-migration-standards
 
 This composer package provides compatibility tests between any two of these PHP versions:
 * PHP 5.2
-* [https://github.com/php-migrations/PHP52to53](PHP 5.3)
-* [https://github.com/php-migrations/PHP53to54](PHP 5.4)
-* [https://github.com/php-migrations/PHP54to55](PHP 5.5)
+* [PHP 5.3](https://github.com/php-migrations/PHP52to53)
+* [PHP 5.4](https://github.com/php-migrations/PHP53to54)
+* [PHP 5.5](https://github.com/php-migrations/PHP54to55)
 
 Please refer to each standard for further detail.
 
