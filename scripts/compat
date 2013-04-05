@@ -4,14 +4,9 @@
 /**
  * @todo add file headers
  * @todo clean up
+ * @todo might use two-step version (1) selects standard (may create tmp. ruleset) (2) executes or says how to, if not able to
  */
  
-// test OS requirement
-if (stripos(php_uname('s'), 'windows') !== false) {
-    echo 'Can not run on windows OS' . PHP_EOL . PHP_EOL;
-    exit(1);
-}
-
 // get from/ with arguments
 $options = getopt('l::h::', array('from:', 'with:'));
 $availableTargets = array(52, 53, 54, 55);
@@ -62,7 +57,6 @@ if ($available[$with]-$available[$from] > 1) {
 }
 
 // patch ARGV and ARGC
-unset($_SERVER['argv'][0]);
 foreach ($_SERVER['argv'] as $k => $v) {
     if ($v == '--from' || $v == '--with') {
         unset($_SERVER['argv'][$k], $_SERVER['argv'][$k+1]);
@@ -72,15 +66,23 @@ $_SERVER['argv'][] = '--standard=' . $standard;
 $_SERVER['argv'] = array_values($_SERVER['argv']);
 $_SERVER['argc'] = count($_SERVER['argv']);
 
-// select phpcs binary
-$phpcs = __DIR__ . '/phpcs';
+// select phpcs binary (same dir, local vendor dir, system default)
+// get path this script was called at
+$phpcs = dirname($_SERVER['PHP_SELF']) . DIRECTORY_SEPARATOR . 'phpcs';
+if (substr($_SERVER['PHP_SELF'], 0, 1) !== DIRECTORY_SEPARATOR) {
+    $phpcs = $_SERVER['PWD'] . DIRECTORY_SEPARATOR . $phpcs;
+}
 if (!file_exists($phpcs)) {
     $phpcs = __DIR__ . '/../vendor/bin/phpcs';
     if (!file_exists($phpcs)) {
+        // *nix only
         $phpcs = trim(`which phpcs 2>/dev/null`);
     }
 }
 
-// execute phpcs
-$cmd = escapeshellcmd($phpcs) . ' '  . implode(' ', $_SERVER['argv']);
-passthru($cmd);
+// filter hashbang from output
+$ghCompatBuffer = false;
+ob_start(function($string) use($ghCompatBuffer) { if ($ghCompatBuffer) return false; $ghCompatBuffer = true; return preg_replace('`^\#\![^\n]+php\s*`us', '', $string); });
+
+// let phpcs handle anything else
+require $phpcs;
