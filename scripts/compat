@@ -3,8 +3,6 @@
 
 /**
  * @todo add file headers
- * @todo clean up
- * @todo might use two-step version (1) selects standard (may create tmp. ruleset) (2) executes or says how to, if not able to
  */
  
 // get from/ with arguments
@@ -12,6 +10,7 @@ $options = getopt('l::h::', array('from:', 'with:'));
 $availableTargets = array(52, 53, 54, 55);
 $available = array_flip($availableTargets);
 
+// print usage info (on demand)
 if (!isset($options['l'])) {
     if (isset($options['h']) || !isset($options['from']) || !isset($options['with'])) {
         echo 'USAGE: compat --from=52 --with=53' . PHP_EOL;
@@ -23,7 +22,7 @@ if (!isset($options['l'])) {
     $with = (int) $options['with'];
 }
 
-// list available versions if requested or range exceeded
+// print available versions (on demand)
 if (isset($options['l']) || !isset($available[$from]) || !isset($available[$with])) {
     echo 'Compatibility tests available for' . PHP_EOL;
     echo '* ' . implode(PHP_EOL . '* ', $availableTargets) . PHP_EOL;
@@ -31,15 +30,13 @@ if (isset($options['l']) || !isset($available[$from]) || !isset($available[$with
     exit(0);
 }
 
-// swap as needed
+// swap versions as needed
 if ($with < $from) {
-    $with = $with ^ $from;
-    $from = $with ^ $from;
-    $with = $with ^ $from;
+    $with = $with ^ $from; $from = $with ^ $from; $with = $with ^ $from;
 }
 
+// select standard or ruleset
 $standard = "PHP{$from}to{$with}";
-// if diff is more than one minor version create a temporary ruleset and use that
 if ($available[$with]-$available[$from] > 1) {
     // create temporary standard
     $standard = sys_get_temp_dir() . '/' . $standard . uniqid() . '.xml';
@@ -56,7 +53,7 @@ if ($available[$with]-$available[$from] > 1) {
     file_put_contents($standard, $ruleset);
 }
 
-// patch ARGV and ARGC
+// patch ARGV and ARGC for phpcs
 foreach ($_SERVER['argv'] as $k => $v) {
     if ($v == '--from' || $v == '--with') {
         unset($_SERVER['argv'][$k], $_SERVER['argv'][$k+1]);
@@ -67,7 +64,6 @@ $_SERVER['argv'] = array_values($_SERVER['argv']);
 $_SERVER['argc'] = count($_SERVER['argv']);
 
 // select phpcs binary (same dir, local vendor dir, system default)
-// get path this script was called at
 $phpcs = dirname($_SERVER['PHP_SELF']) . DIRECTORY_SEPARATOR . 'phpcs';
 if (substr($_SERVER['PHP_SELF'], 0, 1) !== DIRECTORY_SEPARATOR) {
     $phpcs = $_SERVER['PWD'] . DIRECTORY_SEPARATOR . $phpcs;
