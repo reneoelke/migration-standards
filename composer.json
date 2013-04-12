@@ -1,14 +1,11 @@
 {
     "name": "php-migrations/standards",
-    "description": "Compatibility reporting for PHP versions 4.4, 5.0, 5.1, 5.2, 5.3, 5.4 and 5.5.",
+    "description": "Compatibility reporting for PHP versions 5.3, 5.4 and 5.5.",
     "keywords": [
         "phpcs",
         "standard",
         "migration",
         "compatibility",
-        "php4.4",
-        "php5.0",
-        "php5.1",
         "php5.2",
         "php5.3",
         "php5.4",
@@ -25,20 +22,14 @@
             "name": "René Oelke"
         }
     ],
-    "license": "BSD-2-Clause",
+    "license": "BSD-3-Clause",
     "require": {
-        "php-migrations/php44to50": "*",
-        "php-migrations/php50to51": "*",
-        "php-migrations/php51to52": "*",
-        "php-migrations/php52to53": "*",
-        "php-migrations/php53to54": "*",
-        "php-migrations/php54to55": "*"
+        "foobugs-standards/php52to53": "*",
+        "foobugs-standards/php53to54": "*",
+        "foobugs-standards/php54to55": "*"
     },
-    "suggests": {
+    "suggest": {
         "fabpot/php-cs-fixer": "dev-master"
-    },
-    "require": {
-        "php": ">=5.3.6"
     },
     "bin": [
         "scripts/compat"
