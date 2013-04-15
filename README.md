@@ -3,9 +3,9 @@ php-migration-standards
 
 This composer package provides compatibility tests between any two of these PHP versions:
 * PHP 5.2
-* [PHP 5.3](https://github.com/foobugs-standards/PHP52to53)
-* [PHP 5.4](https://github.com/foobugs-standards/PHP53to54)
-* [PHP 5.5](https://github.com/foobugs-standards/PHP54to55)
+* [PHP 5.3](https://github.com/foobugs-standards/Php52to53)
+* [PHP 5.4](https://github.com/foobugs-standards/Php53to54)
+* [PHP 5.5](https://github.com/foobugs-standards/Php54to55)
 
 Please refer to each standard for further detail.
 
@@ -33,12 +33,10 @@ Test compatibility between two versions like
 ./vendor/bin/compat --from=52 --with=54 /path/to/your/code
 ```
 
-Additionally any [phpcs](http://pear.php.net/manual/en/package.php.php-codesniffer.usage.php) argument can be used - but `--standard`.
+Additionally any [phpcs](http://pear.php.net/manual/en/package.php.php-codesniffer.usage.php) argument can be used – but `--standard`.
 
 !! TODO add vagrant setup !!
 
 !! TODO extend usage section !!
 
 !! TODO add references to migration projects like the phpcs fixer !!
-
-!! TODO add travis integration notice !!
